@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Any
+from typing import Any, Dict, List
 
 
 class CommandResult(ABC):
@@ -25,3 +25,21 @@ class SyntaxErrorResult(CommandResult):
 
     def __str__(self: "SyntaxErrorResult") -> str:
         return f"SyntaxErrorResult({str(self.err)})"
+
+
+class TextResult(CommandResult):
+    def __init__(self: "TextResult", text: str, *, options: Dict[str, Any] = {}) -> None:
+        self.text = text
+        self.options = options
+
+    def __str__(self: "TextResult") -> str:
+        return f"TextResult(\"{self.text}\")"
+
+
+class ListResult(CommandResult):
+    def __init__(self: "ListResult", lst: List[Any], *, options: Dict[str, Any] = {}) -> None:
+        self.lst = lst
+        self.options = options
+
+    def __str__(self: "ListResult") -> str:
+        return f"ListResult(\"{str(self.lst)}\")"

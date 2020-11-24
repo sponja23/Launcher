@@ -1,0 +1,1 @@
+launcher_globals = {}
