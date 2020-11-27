@@ -1,5 +1,5 @@
-from .commands import *
-from .commands.autocompletion import *
+from .commands import filesystem
+import jedi
 
-print(directory_autocomplete(""))
-print(file_autocomplete(""))
+interpreter = jedi.Interpreter("ls(", namespaces=[{"ls": filesystem.ls}])
+print(interpreter.get_signatures(1, 3)[0].bracket_start)

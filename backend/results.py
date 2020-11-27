@@ -28,7 +28,8 @@ class SyntaxErrorResult(CommandResult):
 
 
 class TextResult(CommandResult):
-    def __init__(self: "TextResult", text: str, *, options: Dict[str, Any] = {}) -> None:
+    def __init__(self: "TextResult", text: str, *,
+                 options: Dict[str, Any] = {}) -> None:
         self.text = text
         self.options = options
 
@@ -43,3 +44,11 @@ class ListResult(CommandResult):
 
     def __str__(self: "ListResult") -> str:
         return f"ListResult(\"{str(self.lst)}\")"
+
+
+class LatexResult(CommandResult):
+    def __init__(self: "LatexResult", expr: str) -> None:
+        self.expr = expr
+
+    def __str__(self: "LatexResult") -> str:
+        return f"LatexResult(\"{self.expr}\")"

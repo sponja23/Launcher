@@ -33,11 +33,6 @@ def command(arg: Union[str, CommandFunction]) -> Union[Callable[[CommandFunction
         return Command(arg.__name__, arg)
 
 
-@command
-def test(x: int = 5) -> int:
-    return x + 1
-
-
 # VARS
 variables: Dict[str, Any] = {}
 
