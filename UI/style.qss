@@ -1,0 +1,27 @@
+* {
+	color: #ccc;
+	background-color: #2d2d2d;
+}
+
+#frame {
+	width: 640px;
+	padding: 12px;
+	border-radius: 5px;
+	background-color: #2d2d2d;
+
+	min-width: 640px;
+	max-width: 640px;
+}
+
+#input {
+	padding: 2px;
+	font: 36px "Source Sans Pro Bold";
+	selection-color: #fdf6e3;
+	selection-background-color: #586e75;
+	border: none;
+	background-color: #2d2d2d;
+}
+
+#resultLabel {
+	font: 20px "Source Sans Pro Bold";
+}
