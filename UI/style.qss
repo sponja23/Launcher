@@ -25,3 +25,8 @@
 #textResult {
 	font: 20px "Source Sans Pro Bold";
 }
+
+#errorResult {
+	font: 20px "Source Sans Pro Bold";
+	color: #ff8800
+}

@@ -1,6 +1,5 @@
 from .launcher_globals import launcher_globals
-from .results import (CommandResult, ObjectResult, SyntaxErrorResult,
-                      NameErrorResult, NoResult)
+from .results import CommandResult, ObjectResult, ErrorResult, NoResult
 from .base import Command, variables
 from .commands import *
 
@@ -9,6 +8,10 @@ launcher_globals.update(variables)
 
 
 def eval_directive(s: str) -> CommandResult:
+    return NoResult()
+
+
+def eval_bash(s: str) -> CommandResult:
     return NoResult()
 
 
@@ -34,20 +37,21 @@ def eval_expr(s: str) -> CommandResult:
 
 
 def eval_command(s: str) -> CommandResult:
-    if s[0] == "#":
+    if s == "":
+        return NoResult()
+    elif s[0] == "#":
         return eval_directive(s[1:])
+    elif s[0] == ">":
+        return eval_bash(s[1:].strip())
     try:
         return eval_expr(s)
     except SyntaxError:
         try:
             return eval_statement(s)
-        except SyntaxError as err:
-            return SyntaxErrorResult(err)
-        except NameError as err:
-            return NameErrorResult(err)
+        except (NameError, SyntaxError) as err:
+            return ErrorResult(err)
     except NameError as err:
-        return NameErrorResult(err)
-    print("error")
+        return ErrorResult(err)
     return NoResult()
 
 

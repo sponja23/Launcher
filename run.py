@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from backend.eval import eval_command
 from argparse import ArgumentParser
-from UI.main import app, window
+from main import app, window
 
 parse = ArgumentParser()
 parse.add_argument("--backend-test", action="store_true")

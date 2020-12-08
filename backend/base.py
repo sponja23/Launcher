@@ -1,6 +1,8 @@
 from typing import Callable, Any, Dict, Union, Iterable, Mapping
+from .results import CommandResult
 
-CommandFunction = Callable[..., Any]
+
+CommandFunction = Callable[..., CommandResult]
 AutocompleteFunction = Callable[[int, str], Iterable[str]]
 
 
@@ -24,10 +26,8 @@ class Command:
 
 def command(arg: Union[str, CommandFunction]) -> Union[Callable[[CommandFunction], Command], Command]:
     if type(arg) is str:
-
         def decorator(func: Command) -> Command:
             return Command(arg, func)
-
         return decorator
     else:
         return Command(arg.__name__, arg)
@@ -39,6 +39,9 @@ variables: Dict[str, Any] = {}
 
 def add_variable(name: str, obj: Any) -> None:
     variables[name] = obj
+
+
+add_variable("debug", False)
 
 
 # ALIASES

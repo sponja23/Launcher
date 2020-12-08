@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import (QWidget, QGraphicsDropShadowEffect, QFrame,
                              QVBoxLayout, QLayout, QLineEdit, QLabel, QApplication)
 from PyQt5.Qt import QColor
 from PyQt5.QtGui import QKeyEvent, QCursor
-from typing import Iterable, Mapping, Any, Callable
+from typing import Iterable, Mapping, Any, Callable, Optional
 import os
 
 
@@ -22,7 +22,7 @@ class LineInput(QLineEdit):
         self.keyPressedHandler = keyPressedHandler
 
     def keyPressEvent(self: "LineInput", event: QKeyEvent) -> None:
-        if not self.keyPressedHandler(self.window, event.key()):
+        if not self.keyPressedHandler(self.window, event.key(), event.modifiers()):
             super().keyPressEvent(event)
 
 
@@ -60,8 +60,9 @@ class MainWindow(QWidget):
         self.createInput()
         self.createTextResult()
         self.createImageResult()
+        self.createErrorResult()
 
-        self.currentResult = None
+        self.currentResult: Optional[QWidget] = None
 
         self.input.textChanged.connect(self.onTextChange)
         self.input.returnPressed.connect(self.onReturnPressed)
@@ -89,13 +90,21 @@ class MainWindow(QWidget):
     def createTextResult(self: "MainWindow") -> None:
         self.textResult = QLabel()
         self.textResult.setObjectName("textResult")
+        self.textResult.setVisible(False)
         self.frameLayout.addWidget(self.textResult)
 
     def createImageResult(self: "MainWindow") -> None:
         self.imageResult = QLabel()
+        self.imageResult.setObjectName("imageResult")
         self.imageResult.setAlignment(Qt.AlignHCenter)
         self.imageResult.setVisible(False)
         self.frameLayout.addWidget(self.imageResult)
+
+    def createErrorResult(self: "MainWindow") -> None:
+        self.errorResult = QLabel()
+        self.errorResult.setObjectName("errorResult")
+        self.errorResult.setVisible(False)
+        self.frameLayout.addWidget(self.errorResult)
 
     def onReturnPressed(self: "MainWindow") -> None:
         text = self.input.text()
@@ -104,3 +113,10 @@ class MainWindow(QWidget):
 
     def onTextChange(self: "MainWindow", text: str) -> None:
         self.textChangedHandler(self, text)
+
+    def setResultWidget(self: "MainWindow", resultWidget: Optional[QWidget]) -> None:
+        if self.currentResult is not None:
+            self.currentResult.setVisible(False)
+        self.currentResult = resultWidget
+        if self.currentResult is not None:
+            self.currentResult.setVisible(True)

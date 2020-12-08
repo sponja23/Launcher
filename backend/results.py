@@ -19,20 +19,12 @@ class ObjectResult(CommandResult):
         return f"ObjectResult({str(self.obj)})"
 
 
-class SyntaxErrorResult(CommandResult):
-    def __init__(self: "SyntaxErrorResult", err: SyntaxError) -> None:
+class ErrorResult(CommandResult):
+    def __init__(self: "ErrorResult", err: BaseException) -> None:
         self.err = err
 
-    def __str__(self: "SyntaxErrorResult") -> str:
-        return f"SyntaxErrorResult({str(self.err)})"
-
-
-class NameErrorResult(CommandResult):
-    def __init__(self: "NameErrorResult", err: NameError) -> None:
-        self.err = err
-
-    def __str__(self: "NameErrorResult") -> str:
-        return f"NameErrorResult({str(self.err)})"
+    def __str__(self: "ErrorResult") -> str:
+        return f"ErrorResult({str(self.err)})"
 
 
 class TextResult(CommandResult):

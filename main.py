@@ -1,26 +1,44 @@
-from PyQt5.QtCore import Qt, pyqtSlot, Q_CLASSINFO, QPoint
+from PyQt5.QtCore import Qt, pyqtSlot, Q_CLASSINFO
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtDBus import QDBusAbstractAdaptor, QDBusConnection
-from PyQt5.QtGui import QCursor
-from .main_window import MainWindow
+from UI import dbus_options
+from UI.main_window import MainWindow
+from UI.result_handlers import result_handlers, handle_default
+from UI.history import History
 from backend.eval import eval_command
-from . import dbus_options
+from backend.launcher_globals import launcher_globals
+
+
+hist = History()
 
 
 def onReturnPressed(window: MainWindow, text: str) -> None:
-    window.textResult.setText(str(eval_command(text)))
+    if text != "":
+        hist.push(text)
+    result = eval_command(text)
+    result_handlers.get(type(result), handle_default)(window, result)
 
 
 def onTextChanged(window: MainWindow, text: str) -> None:
-    print(f"Text changed: {text}")
+    hist.reset_index()
+    if(launcher_globals["debug"]):
+        print(f"Text changed: {text}")
 
 
-def onKeyPressed(window: MainWindow, key: Qt.Key) -> bool:
+def onKeyPressed(window: MainWindow, key: Qt.Key, modifiers: Qt.KeyboardModifiers) -> bool:
     if key == Qt.Key_Tab:
         print("Pressed Tab")
-        window.setVisible(False)
-        return True
-    return False
+    elif key == Qt.Key_Up and (modifiers & Qt.ControlModifier or True):  # Placeholder for window.currentResult != list
+        window.input.setText(hist.get_prev())
+    elif key == Qt.Key_Down and (modifiers & Qt.ControlModifier or True):
+        window.input.setText(hist.get_next())
+    elif key == Qt.Key_Q and modifiers & Qt.ControlModifier:
+        exit()
+    elif key == Qt.Key_A and modifiers & Qt.ControlModifier:
+        window.input.selectAll()
+    else:
+        return False
+    return True
 
 
 app = QApplication([])
