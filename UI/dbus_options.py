@@ -1,0 +1,3 @@
+HIDE = 0
+SHOW = 1
+TOGGLE = 2

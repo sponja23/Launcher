@@ -1,9 +1,11 @@
 from .launcher_globals import launcher_globals
-from .results import CommandResult, ObjectResult, SyntaxErrorResult, NoResult
-from .base import Command
+from .results import (CommandResult, ObjectResult, SyntaxErrorResult,
+                      NameErrorResult, NoResult)
+from .base import Command, variables
 from .commands import *
 
 launcher_globals.update(Command.table)
+launcher_globals.update(variables)
 
 
 def eval_directive(s: str) -> CommandResult:
@@ -41,6 +43,10 @@ def eval_command(s: str) -> CommandResult:
             return eval_statement(s)
         except SyntaxError as err:
             return SyntaxErrorResult(err)
+        except NameError as err:
+            return NameErrorResult(err)
+    except NameError as err:
+        return NameErrorResult(err)
     print("error")
     return NoResult()
 

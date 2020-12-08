@@ -27,6 +27,14 @@ class SyntaxErrorResult(CommandResult):
         return f"SyntaxErrorResult({str(self.err)})"
 
 
+class NameErrorResult(CommandResult):
+    def __init__(self: "NameErrorResult", err: NameError) -> None:
+        self.err = err
+
+    def __str__(self: "NameErrorResult") -> str:
+        return f"NameErrorResult({str(self.err)})"
+
+
 class TextResult(CommandResult):
     def __init__(self: "TextResult", text: str, *,
                  options: Dict[str, Any] = {}) -> None:

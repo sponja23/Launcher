@@ -1,8 +1,8 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtWidgets import (QWidget, QGraphicsDropShadowEffect, QFrame,
-                             QVBoxLayout, QLayout, QLineEdit, QLabel)
+                             QVBoxLayout, QLayout, QLineEdit, QLabel, QApplication)
 from PyQt5.Qt import QColor
-from PyQt5.QtGui import QKeyEvent
+from PyQt5.QtGui import QKeyEvent, QCursor
 from typing import Iterable, Mapping, Any, Callable
 import os
 
@@ -33,14 +33,16 @@ class MainWindow(QWidget):
                  keyPressedHandler: Callable[["MainWindow", Qt.Key], bool],
                  **kwargs: Mapping[str, Any]) -> None:
         super().__init__(*args, **kwargs)
+        self.setWindowTitle("Launcher")
 
         self.returnPressedHandler = returnPressedHandler
         self.textChangedHandler = textChangedHandler
         self.keyPressedHandler = keyPressedHandler
 
         self.setObjectName("window")
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
+        self.moveToCenter()
 
         effect = QGraphicsDropShadowEffect()
         effect.setBlurRadius(20)
@@ -65,6 +67,11 @@ class MainWindow(QWidget):
         self.input.returnPressed.connect(self.onReturnPressed)
 
         self.setStyleSheet(style_sheet)
+
+    def moveToCenter(self: "MainWindow") -> None:
+        dw = QApplication.desktop()
+        self.move(dw.screenGeometry(dw.screenNumber(QCursor.pos())).center()
+                  - QPoint(self.rect().right() / 2, 256))
 
     def createFrame(self: "MainWindow") -> None:
         self.frame = QFrame(self)
