@@ -30,3 +30,7 @@
 	font: 20px "Source Sans Pro Bold";
 	color: #ff8800
 }
+
+#bashResult {
+	font: 20px "Source Sans Pro Bold";
+}

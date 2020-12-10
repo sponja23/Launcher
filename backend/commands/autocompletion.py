@@ -5,7 +5,7 @@ from typing import List
 
 def file_autocomplete(path: str) -> List[str]:
     p = subprocess.run(f"compgen -f {path}", stdout=subprocess.PIPE,
-                       shell=True, executable="/bin/bash")
+                       check=True, shell=True, executable="/bin/bash")
     results = p.stdout.decode("utf-8").split('\n')
     if "" in results:
         results.remove("")
@@ -15,7 +15,7 @@ def file_autocomplete(path: str) -> List[str]:
 
 def directory_autocomplete(path: str) -> List[str]:
     p = subprocess.run(f"compgen -d {path}", stdout=subprocess.PIPE,
-                       shell=True, executable="/bin/bash")
+                       check=True, shell=True, executable="/bin/bash")
     results = p.stdout.decode("utf-8").split('\n')
     if "" in results:
         results.remove("")

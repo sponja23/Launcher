@@ -16,6 +16,7 @@ class History:
             self.current_index -= 1
             return self.commands[self.current_index]
         else:
+            self.current_index = 0
             return self.commands[0]
 
     def get_next(self: "History") -> str:
@@ -28,3 +29,6 @@ class History:
 
     def reset_index(self: "History") -> None:
         self.current_index = len(self.commands)
+
+
+history = History()

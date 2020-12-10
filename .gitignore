@@ -140,3 +140,5 @@ cython_debug/
 # Sublime Text files
 *.sublime-project
 *.sublime-workspace
+
+user_data/

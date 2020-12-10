@@ -52,3 +52,11 @@ class LatexResult(CommandResult):
 
     def __str__(self: "LatexResult") -> str:
         return f"LatexResult(\"{self.expr}\")"
+
+
+class BashResult(CommandResult):
+    def __init__(self: "BashResult", text: str) -> None:
+        self.text = text
+
+    def __str__(self: "BashResult") -> str:
+        return f"BashResult(\"{self.text}\")"

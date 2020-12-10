@@ -1,6 +1,7 @@
 from .launcher_globals import launcher_globals
-from .results import CommandResult, ObjectResult, ErrorResult, NoResult
+from .results import CommandResult, ObjectResult, ErrorResult, NoResult, BashResult
 from .base import Command, variables
+from .bash import run_bash
 from .commands import *
 
 launcher_globals.update(Command.table)
@@ -12,7 +13,7 @@ def eval_directive(s: str) -> CommandResult:
 
 
 def eval_bash(s: str) -> CommandResult:
-    return NoResult()
+    return BashResult(run_bash(s))
 
 
 def eval_statement(s: str) -> CommandResult:

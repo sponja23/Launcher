@@ -61,6 +61,7 @@ class MainWindow(QWidget):
         self.createTextResult()
         self.createImageResult()
         self.createErrorResult()
+        self.createBashResult()
 
         self.currentResult: Optional[QWidget] = None
 
@@ -105,6 +106,13 @@ class MainWindow(QWidget):
         self.errorResult.setObjectName("errorResult")
         self.errorResult.setVisible(False)
         self.frameLayout.addWidget(self.errorResult)
+
+    def createBashResult(self: "MainWindow") -> None:
+        self.bashResult = QLabel()
+        self.bashResult.setObjectName("bashResult")
+        self.bashResult.setWordWrap(True)
+        self.bashResult.setVisible(False)
+        self.frameLayout.addWidget(self.bashResult)
 
     def onReturnPressed(self: "MainWindow") -> None:
         text = self.input.text()
