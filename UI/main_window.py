@@ -91,33 +91,33 @@ class MainWindow(QWidget):
         self.frameLayout.addWidget(self.input)
 
     def createTextResult(self: "MainWindow") -> None:
-        self.textResult = QLabel()
+        self.textResult = QLabel(self)
         self.textResult.setObjectName("textResult")
         self.textResult.setVisible(False)
         self.frameLayout.addWidget(self.textResult)
 
     def createImageResult(self: "MainWindow") -> None:
-        self.imageResult = QLabel()
+        self.imageResult = QLabel(self)
         self.imageResult.setObjectName("imageResult")
         self.imageResult.setAlignment(Qt.AlignHCenter)
         self.imageResult.setVisible(False)
         self.frameLayout.addWidget(self.imageResult)
 
     def createErrorResult(self: "MainWindow") -> None:
-        self.errorResult = QLabel()
+        self.errorResult = QLabel(self)
         self.errorResult.setObjectName("errorResult")
         self.errorResult.setVisible(False)
         self.frameLayout.addWidget(self.errorResult)
 
     def createBashResult(self: "MainWindow") -> None:
-        self.bashResult = QLabel()
+        self.bashResult = QLabel(self)
         self.bashResult.setObjectName("bashResult")
         self.bashResult.setWordWrap(True)
         self.bashResult.setVisible(False)
         self.frameLayout.addWidget(self.bashResult)
 
     def createListResult(self: "MainWindow") -> None:
-        self.listResult = ResultsList()
+        self.listResult = ResultsList(self)
         self.listResult.setObjectName("listResult")
         self.listResult.setVisible(False)
         self.frameLayout.addWidget(self.listResult)
@@ -136,3 +136,7 @@ class MainWindow(QWidget):
         self.currentResult = resultWidget
         if self.currentResult is not None:
             self.currentResult.setVisible(True)
+
+    def keyPressEvent(self: "ResultsList", event: QKeyEvent) -> None:
+        if event.key() == Qt.Key_E and event.modifiers() & Qt.ControlModifier:
+            self.input.setFocus()

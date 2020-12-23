@@ -12,7 +12,6 @@ def load_settings() -> None:
     global settings
     with open(os.path.join(FILE_DIRECTORY, "..", "user_data", "settings.json"), 'r') as settings_file:
         settings = json.load(settings_file)
-    print(settings)
 
 
 @atexit.register

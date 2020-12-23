@@ -1,5 +1,6 @@
 from PyQt5.QtCore import Qt, QStringListModel, QSize
 from PyQt5.QtWidgets import QListView, QAbstractItemView, QFrame
+from PyQt5.QtGui import QKeyEvent
 from typing import Any, Iterable, Mapping, List
 from backend.settings import settings
 

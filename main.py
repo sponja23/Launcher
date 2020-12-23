@@ -7,6 +7,11 @@ from UI.result_handlers import result_handlers, handle_default
 from backend.eval import eval_command
 from backend.history import history
 from backend.launcher_globals import launcher_globals
+from backend.base import Command, variables
+from backend.commands import *
+
+launcher_globals.update(Command.table)
+launcher_globals.update(variables)
 
 
 def onReturnPressed(window: MainWindow, text: str) -> None:
@@ -35,8 +40,8 @@ def onKeyPressed(window: MainWindow, key: Qt.Key, modifiers: Qt.KeyboardModifier
         window.input.selectAll()
     elif key == Qt.Key_H and modifiers & Qt.ControlModifier:
         eval_command("print_history()")
-    elif key == Qt.Key_D and modifiers & Qt.ControlModifier:
-        print(window.listResult.sizeHintForRow(0))
+    elif key == Qt.Key_R and modifiers & Qt.ControlModifier:
+        window.currentResult.setFocus()
     else:
         return False
     return True

@@ -1,11 +1,7 @@
 from .launcher_globals import launcher_globals
 from .results import CommandResult, ObjectResult, ErrorResult, NoResult, BashResult
-from .base import Command, variables
+from .base import Command
 from .bash import run_bash
-from .commands import *
-
-launcher_globals.update(Command.table)
-launcher_globals.update(variables)
 
 
 def eval_directive(s: str) -> CommandResult:
