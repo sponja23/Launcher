@@ -1,4 +1,5 @@
 from typing import Callable, Any, Dict, Union, Iterable, Mapping
+from .settings import settings
 from .results import CommandResult
 
 
@@ -41,7 +42,7 @@ def add_variable(name: str, obj: Any) -> None:
     variables[name] = obj
 
 
-add_variable("debug", False)
+add_variable("settings", settings)
 
 
 # ALIASES

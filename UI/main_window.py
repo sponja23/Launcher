@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (QWidget, QGraphicsDropShadowEffect, QFrame,
 from PyQt5.Qt import QColor
 from PyQt5.QtGui import QKeyEvent, QCursor
 from typing import Iterable, Mapping, Any, Callable, Optional
+from .results_list import ResultsList
 import os
 
 
@@ -62,6 +63,7 @@ class MainWindow(QWidget):
         self.createImageResult()
         self.createErrorResult()
         self.createBashResult()
+        self.createListResult()
 
         self.currentResult: Optional[QWidget] = None
 
@@ -113,6 +115,12 @@ class MainWindow(QWidget):
         self.bashResult.setWordWrap(True)
         self.bashResult.setVisible(False)
         self.frameLayout.addWidget(self.bashResult)
+
+    def createListResult(self: "MainWindow") -> None:
+        self.listResult = ResultsList()
+        self.listResult.setObjectName("listResult")
+        self.listResult.setVisible(False)
+        self.frameLayout.addWidget(self.listResult)
 
     def onReturnPressed(self: "MainWindow") -> None:
         text = self.input.text()

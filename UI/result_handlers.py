@@ -33,11 +33,19 @@ def handle_default(window: MainWindow, result: CommandResult) -> None:
     window.textResult.setText(str(result))
 
 
+def handle_list(window: MainWindow, result: ListResult) -> None:
+    window.setResultWidget(window.listResult)
+    window.listResult.setList([str(elem) for elem in result.lst])
+    window.listResult.setCurrentIndex(window.listResult.model().index(0, 0))
+    window.listResult.setFocus()
+
+
 result_handlers: Dict[type, Callable[[MainWindow, CommandResult], None]] = {
     TextResult: handle_text,
     ObjectResult: handle_object,
     ErrorResult: handle_error,
     BashResult: handle_bash,
     NoResult: handle_none,
-    CommandResult: handle_default
+    CommandResult: handle_default,
+    ListResult: handle_list
 }

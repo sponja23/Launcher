@@ -18,16 +18,16 @@ def onReturnPressed(window: MainWindow, text: str) -> None:
 
 
 def onTextChanged(window: MainWindow, text: str) -> None:
-    if(launcher_globals["debug"]):
+    if(launcher_globals["settings"]["debug"]):
         print(f"Text changed: {text}")
 
 
 def onKeyPressed(window: MainWindow, key: Qt.Key, modifiers: Qt.KeyboardModifiers) -> bool:
     if key == Qt.Key_Tab:
         print("Pressed Tab")
-    elif key == Qt.Key_Up and True:  # Placeholder for window.currentResult != list
+    elif key == Qt.Key_Up:
         window.input.setText(history.get_prev())
-    elif key == Qt.Key_Down and True:
+    elif key == Qt.Key_Down:
         window.input.setText(history.get_next())
     elif key == Qt.Key_Q and modifiers & Qt.ControlModifier:
         exit()
@@ -35,6 +35,8 @@ def onKeyPressed(window: MainWindow, key: Qt.Key, modifiers: Qt.KeyboardModifier
         window.input.selectAll()
     elif key == Qt.Key_H and modifiers & Qt.ControlModifier:
         eval_command("print_history()")
+    elif key == Qt.Key_D and modifiers & Qt.ControlModifier:
+        print(window.listResult.sizeHintForRow(0))
     else:
         return False
     return True

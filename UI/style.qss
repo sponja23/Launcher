@@ -34,3 +34,41 @@
 #bashResult {
 	font: 20px "Source Sans Pro Bold";
 }
+
+#listResult {
+	selection-color: #ccc;
+	icon-size: 36px;
+	font-size: 26px;
+	font: 20px "Source Sans Pro Bold";
+	background-color: transparent;
+	border: none;
+}
+
+#listResult::item:selected {
+	border: none;
+	background: #3a3a3a;
+}
+
+#listResult QScrollBar:vertical {
+	width: 5px;
+	background: transparent;
+}
+
+#listResult QScrollBar::handle:vertical {
+	background: #AAAAAA;
+	min-height: 24px;
+}
+
+#listResult QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+#listResult QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical,
+#listResult QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	border: 0px;
+	width: 0px;
+	height: 0px;
+	background: transparent;
+}
+
+#listResult::item {
+	height: 48px;
+	padding: 4px;
+}
