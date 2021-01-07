@@ -8,6 +8,7 @@ from backend.eval import eval_command
 from backend.history import history
 from backend.launcher_globals import launcher_globals
 from backend.base import Command, variables
+from backend.fd import FORWARD_DECLARATIONS
 from backend.commands import *
 
 launcher_globals.update(Command.table)
@@ -41,7 +42,8 @@ def onKeyPressed(window: MainWindow, key: Qt.Key, modifiers: Qt.KeyboardModifier
     elif key == Qt.Key_H and modifiers & Qt.ControlModifier:
         eval_command("print_history()")
     elif key == Qt.Key_R and modifiers & Qt.ControlModifier:
-        window.currentResult.setFocus()
+        if window.currentResult is not None:
+            window.currentResult.setFocus()
     else:
         return False
     return True
@@ -57,6 +59,8 @@ window = MainWindow(
             textChangedHandler=onTextChanged,
             keyPressedHandler=onKeyPressed
          )
+
+FORWARD_DECLARATIONS["window"] = window
 
 
 class ServerAdaptor(QDBusAbstractAdaptor):

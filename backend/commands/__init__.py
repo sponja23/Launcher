@@ -1,1 +1,6 @@
-__all__ = ["filesystem", "calc", "debug"]  # noqa: F822
+__all__ = [  # noqa: F822
+    "filesystem",
+    "calc",
+    "debug",
+    "app_commands"
+]

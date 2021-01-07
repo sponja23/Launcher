@@ -1,4 +1,5 @@
-from typing import Callable, Any, Dict, Union, Iterable, Mapping
+from typing import Callable, Any, Dict, Optional, Union, Iterable, Mapping
+from os import path
 from .settings import settings
 from .results import CommandResult
 
@@ -11,12 +12,13 @@ class Command:
     table: Dict[str, "Command"] = {}
 
     def __init__(self: "Command",
-                 name: str,
                  function: CommandFunction,
                  **kwargs: Mapping[str, Any]) -> None:
-        Command.table[name] = self
-        self.name = name
         self.function = function
+        if hasattr(function, "__name__"):
+            self.name = kwargs.get("name", function.__name__)
+        else:
+            self.name = kwargs["name"]
         self.autocomplete: AutocompleteFunction = kwargs.get("autocomplete", None)
 
     def __call__(self: "Command",
@@ -25,13 +27,21 @@ class Command:
         return self.function(*args, **kwargs)
 
 
-def command(arg: Union[str, CommandFunction]) -> Union[Callable[[CommandFunction], Command], Command]:
-    if type(arg) is str:
-        def decorator(func: Command) -> Command:
-            return Command(arg, func)
+def command(func: Optional[CommandFunction] = None,
+            **kwargs: Mapping[str, Any]) -> Union[Callable[[CommandFunction], Command], Command]:
+    if kwargs:
+        assert(func is None)
+
+        def decorator(func: CommandFunction) -> Command:
+            cmd = Command(func, **kwargs)
+            Command.table[cmd.name] = cmd
+            return cmd
+
         return decorator
     else:
-        return Command(arg.__name__, arg)
+        cmd = Command(func)
+        Command.table[cmd.name] = cmd
+        return cmd
 
 
 # VARS
@@ -51,3 +61,7 @@ aliases: Dict[str, str] = {}
 
 def add_alias(name: str, expansion: str) -> None:
     raise NotImplementedError
+
+
+_FILE_DIRECTORY = path.dirname(path.abspath(__file__))
+USER_DATA_DIR = path.abspath(path.join(_FILE_DIRECTORY, "..", "user_data"))
