@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Any, Dict, List, Callable
+from typing import Any, Dict, List, Callable, Optional
 
 
 class CommandResult(ABC):
@@ -39,7 +39,8 @@ class TextResult(CommandResult):
 
 class ListResult(CommandResult):
     def __init__(self: "ListResult", lst: List[Any], *,
-                 options: Dict[str, Any] = {}, item_function: Callable[[int, str], None]) -> None:
+                 options: Dict[str, Any] = {},
+                 item_function: Optional[Callable[[int, str], None]] = None) -> None:
         self.lst = lst
         self.options = options
         self.item_function = item_function

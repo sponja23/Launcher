@@ -3,5 +3,6 @@ __all__ = [  # noqa: F822
     "calc",
     "debug",
     "app_commands",
-    "web"
+    "web",
+    "terminal"
 ]

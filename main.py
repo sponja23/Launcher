@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt, pyqtSlot, Q_CLASSINFO
+from PyQt5.QtCore import Qt, pyqtSlot, Q_CLASSINFO, pyqtRemoveInputHook
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtDBus import QDBusAbstractAdaptor, QDBusConnection
 from UI import dbus_options
@@ -47,6 +47,8 @@ def onKeyPressed(window: MainWindow, key: Qt.Key, modifiers: Qt.KeyboardModifier
         return False
     return True
 
+
+pyqtRemoveInputHook()
 
 app = QApplication([])
 app.setApplicationName("launcher")

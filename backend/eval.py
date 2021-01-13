@@ -27,10 +27,12 @@ def eval_expr(s: str) -> CommandResult:
 
     if result is None:
         return NoResult()
-    elif isinstance(result, CommandResult):
-        return result
     else:
-        return ObjectResult(result)
+        launcher_globals["last"] = result
+        if isinstance(result, CommandResult):
+            return result
+        else:
+            return ObjectResult(result)
 
 
 def eval_command(s: str) -> CommandResult:
