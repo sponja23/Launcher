@@ -3,7 +3,7 @@ from functools import partial
 from os import path
 from ..base import Command, USER_DATA_DIR
 from ..results import NoResult
-from ..fd import FORWARD_DECLARATIONS
+from ..launcher_globals import launcher_globals
 import json
 import re
 import subprocess
@@ -35,11 +35,10 @@ def substitute_var(m: re.Match, *, __positional_args: Iterable[Any],
         return str(kwargs.get(identifier, ""))
 
 
-def exec_app(path: str, *args: Iterable[Any], **kwargs: Mapping[str, Any]) -> NoResult:
+def exec_app(path: str, *args: Iterable[Any], **kwargs: Mapping[str, Any]) -> None:
     path = re.sub(path_var_regex, partial(substitute_var, __positional_args=args, **kwargs), path)
     subprocess.run(path, shell=True)
-    FORWARD_DECLARATIONS["window"].setVisible(False)
-    return NoResult()
+    launcher_globals["window"].setVisible(False)
 
 
 if path.exists(APPS_PATH):

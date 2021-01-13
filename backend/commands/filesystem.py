@@ -33,3 +33,10 @@ def cd(path: str) -> None:
 def op(path: str) -> None:
     path = process_path(path)
     subprocess.run(["xdg-open", os.path.expanduser(path)])
+
+
+@command
+def autojump(name: str) -> TextResult:
+    path = subprocess.run(["autojump", name], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
+    os.chdir(path)
+    return TextResult(f"Jumped to {path}")

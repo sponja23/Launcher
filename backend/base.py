@@ -33,8 +33,14 @@ def command(func: Optional[CommandFunction] = None,
         assert(func is None)
 
         def decorator(func: CommandFunction) -> Command:
+            aliases = kwargs.pop("aliases", [])
+
             cmd = Command(func, **kwargs)
             Command.table[cmd.name] = cmd
+
+            for alias in aliases:
+                Command.table[alias] = cmd
+
             return cmd
 
         return decorator

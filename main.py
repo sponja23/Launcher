@@ -8,7 +8,6 @@ from backend.eval import eval_command
 from backend.history import history
 from backend.launcher_globals import launcher_globals
 from backend.base import Command, variables
-from backend.fd import FORWARD_DECLARATIONS
 from backend.commands import *
 
 launcher_globals.update(Command.table)
@@ -60,7 +59,7 @@ window = MainWindow(
             keyPressedHandler=onKeyPressed
          )
 
-FORWARD_DECLARATIONS["window"] = window
+launcher_globals["window"] = window
 
 
 class ServerAdaptor(QDBusAbstractAdaptor):

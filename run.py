@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from backend.eval import eval_command
 from argparse import ArgumentParser
+from backend.eval import eval_command
 from main import app, window
 
 parse = ArgumentParser()
