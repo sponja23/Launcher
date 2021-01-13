@@ -4,5 +4,6 @@ __all__ = [  # noqa: F822
     "debug",
     "app_commands",
     "web",
-    "terminal"
+    "terminal",
+    "timer"
 ]

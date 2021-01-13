@@ -1,1 +1,4 @@
 sympy
+notify-py
+requests
+pyqt5

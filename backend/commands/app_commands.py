@@ -1,12 +1,12 @@
 from typing import Iterable, Mapping, Any
 from functools import partial
 from os import path
-from ..base import Command, USER_DATA_DIR
-from ..results import NoResult
-from ..launcher_globals import launcher_globals
 import json
 import re
 import subprocess
+from ..base import Command, USER_DATA_DIR
+from ..results import NoResult
+from ..launcher_globals import launcher_globals
 
 
 APPS_PATH = path.join(USER_DATA_DIR, "apps.json")

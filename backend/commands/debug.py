@@ -1,7 +1,7 @@
+from pprint import pprint
 from ..base import command
 from ..launcher_globals import launcher_globals
 from ..history import history
-from pprint import pprint
 
 
 @command
